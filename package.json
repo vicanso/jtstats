@@ -5,7 +5,9 @@
   "main": "dest/app",
   "dependencies": {
     "commander": "~2.2.0",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "moment": "~2.5.1",
+    "mongoose": "~3.8.8"
   },
   "devDependencies": {
     "grunt-contrib-coffee": "~0.10.1",

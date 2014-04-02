@@ -17,3 +17,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-jshint'
 
   grunt.registerTask 'gen', ['coffee:node', 'jshint']
+  grunt.registerTask 'default', ['gen']

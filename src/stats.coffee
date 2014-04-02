@@ -1,21 +1,57 @@
 _ = require 'underscore'
-saveInterval = 10 * 1000
+moment = require 'moment'
+db = require './db'
+config = require './config'
+saveInterval = config.interval
 LOG_DATA_DICT = {}
 
 module.exports.add = (data) ->
   now = Date.now()
   data.createdAt = now
-  tag = data.tag
-  if !LOG_DATA_DICT[tag]
-    LOG_DATA_DICT[tag] = []
-  list = LOG_DATA_DICT[tag]
-  first = _.first list
-  saveData tag if first && first.createdAt + saveInterval < now
+  key = data.key
+  if !LOG_DATA_DICT[key]
+    LOG_DATA_DICT[key] = []
+  list = LOG_DATA_DICT[key]
+  firstItem = _.first list
+  saveData key if firstItem && firstItem.createdAt + saveInterval < now
 
-  LOG_DATA_DICT[tag].push data
+  LOG_DATA_DICT[key].push data
 
-saveData = (tag) ->
-  list = LOG_DATA_DICT[tag]
-  console.dir list
-  LOG_DATA_DICT[tag] = []
+saveData = (key) ->
+  list = LOG_DATA_DICT[key]
+  firstItem = _.first list
+  createdAt = firstItem.createdAt
+  type = firstItem.type
+  date = moment createdAt
+  infos = key.split '.'
+  collection = infos[0]
+  category = infos[1]
+  tag = infos[2]
+  query = 
+    date : date.format 'YYYY-MM-DD'
+    type : type
+  query.category = category if category
+  query.tag = tag if tag
 
+  if firstItem.type == 'average'
+    value = average _.pluck list, 'value'
+  else
+    value = sum _.pluck list, 'value'
+  db.findOneAndUpdate collection, query, {
+    '$push' : 
+      'values' : 
+        t : createdAt
+        v : value
+  }
+  LOG_DATA_DICT[key] = []
+  return
+
+
+sum = (data) ->
+  _.reduce data, (memo, num) ->
+    memo + num
+  , 0
+
+average = (data) ->
+  total = sum data
+  Math.round total / data.length
