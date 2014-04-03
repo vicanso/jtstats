@@ -58,7 +58,7 @@
     db.findOneAndUpdate(collection, query, {
       '$push': {
         'values': {
-          t: createdAt,
+          t: Math.floor(createdAt / 1000),
           v: value
         }
       }
