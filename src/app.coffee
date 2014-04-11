@@ -1,7 +1,7 @@
 config = require './config'
 dgram = require 'dgram'
 server = dgram.createSocket 'udp4'
-stats = require './stats'
+# stats = require './stats'
 
 server.on 'listening', ->
   address = server.address()
@@ -9,6 +9,7 @@ server.on 'listening', ->
 
 server.on 'message', (msg) ->
   data = JSON.parse msg
-  stats.add data
+  console.dir data
+  # stats.add data
 
 server.bind config.port, config.host

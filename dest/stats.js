@@ -52,6 +52,8 @@
     }
     if (firstItem.type === 'average') {
       value = average(_.pluck(list, 'value'));
+    } else if (firstItem.type === 'gauge') {
+      value = _.last(list).value;
     } else {
       value = sum(_.pluck(list, 'value'));
     }

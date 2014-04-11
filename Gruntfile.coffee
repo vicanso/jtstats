@@ -1,5 +1,6 @@
 module.exports = (grunt) ->
   grunt.initConfig {
+    clean : ['dest']
     coffee : 
       node :
         expand : true
@@ -15,6 +16,7 @@ module.exports = (grunt) ->
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
+  grunt.loadNpmTasks 'grunt-contrib-clean'
 
-  grunt.registerTask 'gen', ['coffee:node', 'jshint']
+  grunt.registerTask 'gen', ['clean', 'coffee:node', 'jshint']
   grunt.registerTask 'default', ['gen']
