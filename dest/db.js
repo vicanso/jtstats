@@ -1,17 +1,35 @@
 (function() {
-  var Schema, config, db, getModel, modelDict, mongoose, noop;
+  var Schema, db, getModel, modelDict, mongoose, noop;
 
   mongoose = require('mongoose');
 
   Schema = mongoose.Schema;
 
-  config = require('./config');
-
-  db = mongoose.connect(config.mongodbUri);
+  db = null;
 
   modelDict = {};
 
   noop = function() {};
+
+
+  /**
+   * [initDb 初始化db]
+   * @param  {[连接URI]} uri
+   * @return {[type]}
+   */
+
+  module.exports.initDb = function(uri) {
+    db = mongoose.connect(uri);
+  };
+
+
+  /**
+   * [findOneAndUpdate mongoose的findOneAndUpdate]
+   * @param  {String} collection
+   * @param  {Object} query
+   * @param  {Object} update
+   * @return {[type]}
+   */
 
   module.exports.findOneAndUpdate = function(collection, query, update) {
     var Model, options;
@@ -26,8 +44,18 @@
     return Model.update(query, update, options, noop);
   };
 
+
+  /**
+   * [getModel 获取model]
+   * @param  {String} collection
+   * @return {[type]}
+   */
+
   getModel = function(collection) {
     var model, schema;
+    if (!db) {
+      throw new Error('the db is not init!');
+    }
     schema = new Schema({}, {
       safe: false,
       strict: false,

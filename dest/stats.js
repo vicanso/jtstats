@@ -1,17 +1,19 @@
 (function() {
-  var LOG_DATA_DICT, average, config, db, moment, saveData, saveInterval, sum, _;
+  var LOG_DATA_DICT, average, db, formatDate, saveData, saveInterval, sum, _;
 
   _ = require('underscore');
 
-  moment = require('moment');
-
   db = require('./db');
 
-  config = require('./config');
-
-  saveInterval = config.interval;
+  saveInterval = 10 * 1000;
 
   LOG_DATA_DICT = {};
+
+
+  /**
+   * [add 添加统计]
+   * @param {[type]} data
+   */
 
   module.exports.add = function(data) {
     var firstItem, key, list, now;
@@ -26,8 +28,27 @@
     if (firstItem && firstItem.createdAt + saveInterval < now) {
       saveData(key);
     }
-    return LOG_DATA_DICT[key].push(data);
+    LOG_DATA_DICT[key].push(data);
   };
+
+
+  /**
+   * [setInterval 设置保存数据的时间间隔（默认为10s）]
+   * @param {[type]} value
+   */
+
+  module.exports.setInterval = function(value) {
+    if (value && value > 0) {
+      saveInterval = value;
+    }
+  };
+
+
+  /**
+   * [saveData 保存数据]
+   * @param  {[type]} key
+   * @return {[type]}
+   */
 
   saveData = function(key) {
     var category, collection, createdAt, date, firstItem, infos, list, query, tag, type, value;
@@ -35,13 +56,13 @@
     firstItem = _.first(list);
     createdAt = firstItem.createdAt;
     type = firstItem.type;
-    date = moment(createdAt);
+    date = new Date(createdAt);
     infos = key.split('.');
     collection = infos[0];
     category = infos[1];
     tag = infos[2];
     query = {
-      date: date.format('YYYY-MM-DD'),
+      date: formatDate(date),
       type: type
     };
     if (category) {
@@ -66,6 +87,25 @@
       }
     });
     LOG_DATA_DICT[key] = [];
+  };
+
+  formatDate = function(date) {
+    var day, month, str;
+    str = date.getFullYear();
+    month = date.getMonth() + 1;
+    str += '-';
+    if (month < 10) {
+      str += "0" + month;
+    } else {
+      str += month;
+    }
+    day = date.getDate();
+    str += '-';
+    if (day < 10) {
+      return str += "0" + day;
+    } else {
+      return str += day;
+    }
   };
 
   sum = function(data) {
