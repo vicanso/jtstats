@@ -6,12 +6,14 @@ stats = require './stats'
 module.exports.start = (options = {}) ->
   server.on 'listening', ->
     address = server.address()
-    console.dir "UDP server listening on #{address.address}:#{address.port}"
+    console.dir "jtstats, UDP server listening on #{address.address}:#{address.port}"
   server.on 'message', (msg) ->
     data = JSON.parse msg
     stats.add data
 
-  db.initDb = options.uri
+  if !options.uri
+    throw new Error 'the mongodb uri is undefined'
+  db.initDb options.uri
   
   stats.setInterval options.interval if options.interval
 

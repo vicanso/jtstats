@@ -16,14 +16,17 @@
     server.on('listening', function() {
       var address;
       address = server.address();
-      return console.dir("UDP server listening on " + address.address + ":" + address.port);
+      return console.dir("jtstats, UDP server listening on " + address.address + ":" + address.port);
     });
     server.on('message', function(msg) {
       var data;
       data = JSON.parse(msg);
       return stats.add(data);
     });
-    db.initDb = options.uri;
+    if (!options.uri) {
+      throw new Error('the mongodb uri is undefined');
+    }
+    db.initDb(options.uri);
     if (options.interval) {
       stats.setInterval(options.interval);
     }

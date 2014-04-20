@@ -1,9 +1,6 @@
 mongoose = require 'mongoose'
 Schema = mongoose.Schema
 
-# config = require './config'
-
-# db = mongoose.connect config.mongodbUri
 db = null
 
 modelDict = {}
