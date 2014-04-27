@@ -43,11 +43,13 @@ saveData = (key) ->
   collection = infos[0]
   category = infos[1]
   tag = infos[2]
+  subTag = infos[3]
   query = 
     date : formatDate date
     type : type
   query.category = category if category
   query.tag = tag if tag
+  query.subTag = subTag if subTag
 
   if firstItem.type == 'average'
     value = average _.pluck list, 'value'
