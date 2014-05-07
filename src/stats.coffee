@@ -42,14 +42,16 @@ saveData = (key) ->
   infos = key.split '.'
   collection = infos[0]
   category = infos[1]
-  tag = infos[2]
-  subTag = infos[3]
+  group = infos[2]
+  kind = infos[3]
+  tag = infos[4]
   query = 
     date : formatDate date
     type : type
   query.category = category if category
+  query.group = group if group
+  query.kind = kind if kind
   query.tag = tag if tag
-  query.subTag = subTag if subTag
 
   if firstItem.type == 'average'
     value = average _.pluck list, 'value'
