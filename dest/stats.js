@@ -61,7 +61,8 @@
     collection = infos.shift();
     query = {
       date: formatDate(date),
-      type: type
+      type: type,
+      tag: infos.join('.')
     };
     for (i = _i = 0, _len = infos.length; _i < _len; i = ++_i) {
       info = infos[i];

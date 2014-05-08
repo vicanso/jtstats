@@ -49,6 +49,24 @@ getModel = (collection) ->
       date : 1
       type : 1
       category0 : 1
+    }
+    {
+      date : 1
+      type : 1
+      category0 : 1
+      category1 : 1
+    }
+    {
+      date : 1
+      type : 1
+      category0 : 1
+      category1 : 1
+      category2 : 1
+    }
+    {
+      date : 1
+      type : 1
+      category0 : 1
       category1 : 1
       category2 : 1
       category3 : 1

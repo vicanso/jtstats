@@ -45,6 +45,7 @@ saveData = (key) ->
   query = 
     date : formatDate date
     type : type
+    tag : infos.join '.'
   for info, i in infos
     query["category#{i}"] = info
 
