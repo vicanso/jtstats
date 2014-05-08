@@ -51,33 +51,21 @@
    */
 
   saveData = function(key) {
-    var category, collection, createdAt, date, firstItem, group, infos, kind, list, query, tag, type, value;
+    var collection, createdAt, date, firstItem, i, info, infos, list, query, type, value, _i, _len;
     list = LOG_DATA_DICT[key];
     firstItem = _.first(list);
     createdAt = firstItem.createdAt;
     type = firstItem.type;
     date = new Date(createdAt);
     infos = key.split('.');
-    collection = infos[0];
-    category = infos[1];
-    group = infos[2];
-    kind = infos[3];
-    tag = infos[4];
+    collection = infos.shift();
     query = {
       date: formatDate(date),
       type: type
     };
-    if (category) {
-      query.category = category;
-    }
-    if (group) {
-      query.group = group;
-    }
-    if (kind) {
-      query.kind = kind;
-    }
-    if (tag) {
-      query.tag = tag;
+    for (i = _i = 0, _len = infos.length; _i < _len; i = ++_i) {
+      info = infos[i];
+      query["category" + i] = info;
     }
     if (firstItem.type === 'average') {
       value = average(_.pluck(list, 'value'));

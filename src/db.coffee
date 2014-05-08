@@ -46,10 +46,12 @@ getModel = (collection) ->
   }
   schema.index [
     {
-      category : 1
-      tag : 1
       date : 1
       type : 1
+      category0 : 1
+      category1 : 1
+      category2 : 1
+      category3 : 1
     }
   ]
   model = db.model collection, schema

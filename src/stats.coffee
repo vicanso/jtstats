@@ -40,18 +40,13 @@ saveData = (key) ->
   type = firstItem.type
   date = new Date createdAt
   infos = key.split '.'
-  collection = infos[0]
-  category = infos[1]
-  group = infos[2]
-  kind = infos[3]
-  tag = infos[4]
+  collection = infos.shift()
+
   query = 
     date : formatDate date
     type : type
-  query.category = category if category
-  query.group = group if group
-  query.kind = kind if kind
-  query.tag = tag if tag
+  for info, i in infos
+    query["category#{i}"] = info
 
   if firstItem.type == 'average'
     value = average _.pluck list, 'value'
