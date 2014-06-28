@@ -12,7 +12,16 @@ noop = ->
  * @return {[type]}
 ###
 module.exports.initDb = (uri) ->
-  db = mongoose.connect uri
+  options = 
+    db :
+      native_parser : true
+    server :
+      poolSize : 5
+  db = mongoose.createConnection uri, options
+  db.on 'connected', ->
+    console.log "#{uri} connected"
+  db.on 'disconnected', ->
+    console.log "#{uri} disconnected"
   return
 
 ###*
@@ -36,8 +45,7 @@ module.exports.findOneAndUpdate = (collection, query, update) ->
  * @return {[type]}
 ###
 getModel = (collection) ->
-  if !db
-    return throw new Error 'the db is not init!'
+  return throw new Error 'the db is not init!' if !db
     
   schema = new Schema {}, {
     safe : false
@@ -46,30 +54,11 @@ getModel = (collection) ->
   }
   schema.index [
     {
-      date : 1
-      type : 1
-      category0 : 1
+      key : 1
     }
     {
+      key : 1
       date : 1
-      type : 1
-      category0 : 1
-      category1 : 1
-    }
-    {
-      date : 1
-      type : 1
-      category0 : 1
-      category1 : 1
-      category2 : 1
-    }
-    {
-      date : 1
-      type : 1
-      category0 : 1
-      category1 : 1
-      category2 : 1
-      category3 : 1
     }
   ]
   model = db.model collection, schema

@@ -1,5 +1,5 @@
 (function() {
-  var db, dgram, server, stats;
+  var db, dgram, server, stats, _;
 
   dgram = require('dgram');
 
@@ -9,6 +9,8 @@
 
   stats = require('./stats');
 
+  _ = require('underscore');
+
   module.exports.start = function(options) {
     if (options == null) {
       options = {};
@@ -16,12 +18,14 @@
     server.on('listening', function() {
       var address;
       address = server.address();
-      return console.dir("jtstats, UDP server listening on " + address.address + ":" + address.port);
+      return console.log("jtstats, UDP server listening on " + address.address + ":" + address.port);
     });
     server.on('message', function(msg) {
-      var data;
-      data = JSON.parse(msg);
-      return stats.add(data);
+      var arr;
+      arr = msg.toString().split('||');
+      return _.each(arr, function(msg) {
+        return stats.add(msg);
+      });
     });
     if (!options.uri) {
       throw new Error('the mongodb uri is undefined');

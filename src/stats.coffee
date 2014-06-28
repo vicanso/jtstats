@@ -7,15 +7,21 @@ LOG_DATA_DICT = {}
  * [add 添加统计]
  * @param {[type]} data
 ###
-module.exports.add = (data) ->
-  now = Date.now()
-  data.createdAt = now
-  key = data.key
-  if !LOG_DATA_DICT[key]
-    LOG_DATA_DICT[key] = []
+module.exports.add = (msg) ->
+  arr = msg.split '|'
+  createdAt = GLOBAL.parseInt arr[4]
+  data =
+    category : arr[0]
+    key : arr[1]
+    type : arr[2]
+    value : GLOBAL.parseInt arr[3]
+    createdAt : createdAt
+  key = "#{data.category}#{data.key}"
+  LOG_DATA_DICT[key] = [] if !LOG_DATA_DICT[key]
   list = LOG_DATA_DICT[key]
   firstItem = _.first list
-  saveData key if firstItem && firstItem.createdAt + saveInterval < now
+  if firstItem?.createdAt + saveInterval < createdAt
+    saveData key 
   LOG_DATA_DICT[key].push data
   return
 
@@ -35,23 +41,24 @@ module.exports.setInterval = (value) ->
 ###
 saveData = (key) ->
   list = LOG_DATA_DICT[key]
-  firstItem = _.first list
-  createdAt = firstItem.createdAt
-  type = firstItem.type
-  date = new Date createdAt
-  infos = key.split '.'
-  collection = infos.shift()
+  LOG_DATA_DICT[key] = []
+  lastItem = _.last list
 
-  query = 
+  # console.dir Date.now()
+  # console.dir list
+
+  createdAt = lastItem.createdAt
+  type = lastItem.type
+  date = new Date createdAt
+  collection = lastItem.category
+  query =
     date : formatDate date
     type : type
-    tag : infos.join '.'
-  for info, i in infos
-    query["category#{i}"] = info
+    key : lastItem.key
 
-  if firstItem.type == 'average'
+  if lastItem.type == 'average'
     value = average _.pluck list, 'value'
-  else if firstItem.type == 'gauge'
+  else if lastItem.type == 'gauge'
     value = _.last(list).value
   else
     value = sum _.pluck list, 'value'
@@ -61,7 +68,6 @@ saveData = (key) ->
         t : Math.floor createdAt / 1000
         v : value
   }
-  LOG_DATA_DICT[key] = []
   return
 
 

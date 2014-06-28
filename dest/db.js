@@ -19,7 +19,22 @@
    */
 
   module.exports.initDb = function(uri) {
-    db = mongoose.connect(uri);
+    var options;
+    options = {
+      db: {
+        native_parser: true
+      },
+      server: {
+        poolSize: 5
+      }
+    };
+    db = mongoose.createConnection(uri, options);
+    db.on('connected', function() {
+      return console.log("" + uri + " connected");
+    });
+    db.on('disconnected', function() {
+      return console.log("" + uri + " disconnected");
+    });
   };
 
 
@@ -63,27 +78,10 @@
     });
     schema.index([
       {
-        date: 1,
-        type: 1,
-        category0: 1
+        key: 1
       }, {
-        date: 1,
-        type: 1,
-        category0: 1,
-        category1: 1
-      }, {
-        date: 1,
-        type: 1,
-        category0: 1,
-        category1: 1,
-        category2: 1
-      }, {
-        date: 1,
-        type: 1,
-        category0: 1,
-        category1: 1,
-        category2: 1,
-        category3: 1
+        key: 1,
+        date: 1
       }
     ]);
     model = db.model(collection, schema);

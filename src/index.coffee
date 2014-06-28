@@ -2,14 +2,16 @@ dgram = require 'dgram'
 server = dgram.createSocket 'udp4'
 db = require './db'
 stats = require './stats'
+_ = require 'underscore'
 
 module.exports.start = (options = {}) ->
   server.on 'listening', ->
     address = server.address()
-    console.dir "jtstats, UDP server listening on #{address.address}:#{address.port}"
+    console.log "jtstats, UDP server listening on #{address.address}:#{address.port}"
   server.on 'message', (msg) ->
-    data = JSON.parse msg
-    stats.add data
+    arr = msg.toString().split '||'
+    _.each arr, (msg) ->
+      stats.add msg
 
   if !options.uri
     throw new Error 'the mongodb uri is undefined'

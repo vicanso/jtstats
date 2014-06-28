@@ -15,17 +15,24 @@
    * @param {[type]} data
    */
 
-  module.exports.add = function(data) {
-    var firstItem, key, list, now;
-    now = Date.now();
-    data.createdAt = now;
-    key = data.key;
+  module.exports.add = function(msg) {
+    var arr, createdAt, data, firstItem, key, list;
+    arr = msg.split('|');
+    createdAt = GLOBAL.parseInt(arr[4]);
+    data = {
+      category: arr[0],
+      key: arr[1],
+      type: arr[2],
+      value: GLOBAL.parseInt(arr[3]),
+      createdAt: createdAt
+    };
+    key = "" + data.category + data.key;
     if (!LOG_DATA_DICT[key]) {
       LOG_DATA_DICT[key] = [];
     }
     list = LOG_DATA_DICT[key];
     firstItem = _.first(list);
-    if (firstItem && firstItem.createdAt + saveInterval < now) {
+    if ((firstItem != null ? firstItem.createdAt : void 0) + saveInterval < createdAt) {
       saveData(key);
     }
     LOG_DATA_DICT[key].push(data);
@@ -51,26 +58,22 @@
    */
 
   saveData = function(key) {
-    var collection, createdAt, date, firstItem, i, info, infos, list, query, type, value, _i, _len;
+    var collection, createdAt, date, lastItem, list, query, type, value;
     list = LOG_DATA_DICT[key];
-    firstItem = _.first(list);
-    createdAt = firstItem.createdAt;
-    type = firstItem.type;
+    LOG_DATA_DICT[key] = [];
+    lastItem = _.last(list);
+    createdAt = lastItem.createdAt;
+    type = lastItem.type;
     date = new Date(createdAt);
-    infos = key.split('.');
-    collection = infos.shift();
+    collection = lastItem.category;
     query = {
       date: formatDate(date),
       type: type,
-      tag: infos.join('.')
+      key: lastItem.key
     };
-    for (i = _i = 0, _len = infos.length; _i < _len; i = ++_i) {
-      info = infos[i];
-      query["category" + i] = info;
-    }
-    if (firstItem.type === 'average') {
+    if (lastItem.type === 'average') {
       value = average(_.pluck(list, 'value'));
-    } else if (firstItem.type === 'gauge') {
+    } else if (lastItem.type === 'gauge') {
       value = _.last(list).value;
     } else {
       value = sum(_.pluck(list, 'value'));
@@ -83,7 +86,6 @@
         }
       }
     });
-    LOG_DATA_DICT[key] = [];
   };
 
   formatDate = function(date) {
