@@ -62,12 +62,13 @@ saveData = (key) ->
     value = _.last(list).value
   else
     value = sum _.pluck list, 'value'
+
   db.findOneAndUpdate collection, query, {
     '$push' : 
       'values' : 
         t : Math.floor createdAt / 1000
         v : value
-  }
+  } if collection != 'user' && collection != 'setting'
   return
 
 

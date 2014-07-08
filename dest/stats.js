@@ -78,14 +78,16 @@
     } else {
       value = sum(_.pluck(list, 'value'));
     }
-    db.findOneAndUpdate(collection, query, {
-      '$push': {
-        'values': {
-          t: Math.floor(createdAt / 1000),
-          v: value
+    if (collection !== 'user' && collection !== 'setting') {
+      db.findOneAndUpdate(collection, query, {
+        '$push': {
+          'values': {
+            t: Math.floor(createdAt / 1000),
+            v: value
+          }
         }
-      }
-    });
+      });
+    }
   };
 
   formatDate = function(date) {
