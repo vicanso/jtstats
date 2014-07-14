@@ -68,7 +68,7 @@ saveData = (key) ->
       'values' : 
         t : Math.floor createdAt / 1000
         v : value
-  } if collection != 'user' && collection != 'setting'
+  } if '_' != collection.charAt 0
   return
 
 

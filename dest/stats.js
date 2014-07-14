@@ -78,7 +78,7 @@
     } else {
       value = sum(_.pluck(list, 'value'));
     }
-    if (collection !== 'user' && collection !== 'setting') {
+    if ('_' !== collection.charAt(0)) {
       db.findOneAndUpdate(collection, query, {
         '$push': {
           'values': {
