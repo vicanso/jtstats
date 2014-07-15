@@ -14,7 +14,7 @@ module.exports.add = (msg) ->
     category : arr[0]
     key : arr[1]
     type : arr[2]
-    value : GLOBAL.parseInt arr[3]
+    value : GLOBAL.parseFloat arr[3]
     createdAt : createdAt
   key = "#{data.category}#{data.key}"
   LOG_DATA_DICT[key] = [] if !LOG_DATA_DICT[key]
@@ -68,7 +68,7 @@ saveData = (key) ->
       'values' : 
         t : Math.floor createdAt / 1000
         v : value
-  } if '_' != collection.charAt 0
+  } if collection != 'configs'
   return
 
 

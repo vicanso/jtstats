@@ -1,1 +1,1 @@
-node-dev src/app.coffee --uri mongodb://vicanso:123456@localhost:10020/stats
+node-dev src/app.coffee --uri mongodb://localhost:10020/stats
