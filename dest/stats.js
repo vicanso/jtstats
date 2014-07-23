@@ -23,7 +23,7 @@
       category: arr[0],
       key: arr[1],
       type: arr[2],
-      value: GLOBAL.parseInt(arr[3]),
+      value: GLOBAL.parseFloat(arr[3]),
       createdAt: createdAt
     };
     key = "" + data.category + data.key;
@@ -78,7 +78,7 @@
     } else {
       value = sum(_.pluck(list, 'value'));
     }
-    if ('_' !== collection.charAt(0)) {
+    if (collection !== 'configs' && collection !== 'users') {
       db.findOneAndUpdate(collection, query, {
         '$push': {
           'values': {
