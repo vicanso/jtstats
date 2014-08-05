@@ -58,7 +58,7 @@
    */
 
   saveData = function(key) {
-    var collection, createdAt, date, lastItem, list, query, type, value;
+    var collection, createdAt, date, lastItem, list, pushValue, query, t, type, value;
     list = LOG_DATA_DICT[key];
     LOG_DATA_DICT[key] = [];
     lastItem = _.last(list);
@@ -71,6 +71,9 @@
       type: type,
       key: lastItem.key
     };
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
     if (lastItem.type === 'average') {
       value = average(_.pluck(list, 'value'));
     } else if (lastItem.type === 'gauge') {
@@ -78,13 +81,13 @@
     } else {
       value = sum(_.pluck(list, 'value'));
     }
+    pushValue = {};
+    t = Math.floor((createdAt - date.getTime()) / 1000);
+    pushValue[t] = value;
     if (collection !== 'configs' && collection !== 'users') {
       db.findOneAndUpdate(collection, query, {
         '$push': {
-          'values': {
-            t: Math.floor(createdAt / 1000),
-            v: value
-          }
+          'values': pushValue
         }
       });
     }

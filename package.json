@@ -1,7 +1,7 @@
 {
   "name": "jtstats",
   "description": "stats server",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "main": "dest/index",
   "dependencies": {
     "commander": "^2.2.0",
