@@ -9,7 +9,9 @@ module.exports.start = (options = {}) ->
     address = server.address()
     console.log "jtstats, UDP server listening on #{address.address}:#{address.port}"
   server.on 'message', (msg) ->
+
     arr = msg.toString().split '||'
+    console.log arr.join '\n' if options.enableLog
     _.each arr, (msg) ->
       stats.add msg
 

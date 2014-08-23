@@ -67,7 +67,7 @@ saveData = (key) ->
   db.findOneAndUpdate collection, query, {
     '$push' : 
       'values' : pushValue
-  } if collection != 'configs' && collection != 'users'
+  } if !~collection.indexOf 'stats_'
   return
 
 

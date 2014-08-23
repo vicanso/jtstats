@@ -84,7 +84,7 @@
     pushValue = {};
     t = Math.floor((createdAt - date.getTime()) / 1000);
     pushValue[t] = value;
-    if (collection !== 'configs' && collection !== 'users') {
+    if (!~collection.indexOf('stats_')) {
       db.findOneAndUpdate(collection, query, {
         '$push': {
           'values': pushValue

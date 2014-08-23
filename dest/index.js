@@ -23,6 +23,9 @@
     server.on('message', function(msg) {
       var arr;
       arr = msg.toString().split('||');
+      if (options.enableLog) {
+        console.log(arr.join('\n'));
+      }
       return _.each(arr, function(msg) {
         return stats.add(msg);
       });

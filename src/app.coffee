@@ -6,4 +6,5 @@ jtStats.start {
   host : config.host
   interval : config.interval
   uri : config.mongodbUri
+  enableLog : config.enableLog
 }
