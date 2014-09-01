@@ -67,3 +67,15 @@ body, html{
   display: block;
   margin: 10px;
 }
+
+.contentContainer{
+  position: absolute;
+  left: 120px;
+  top: 50px;
+  bottom: 0px
+  right: 0px;
+}
+.contentContainer img{
+  display: block;
+  max-width: 100%;
+}
