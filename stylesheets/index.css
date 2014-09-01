@@ -1,0 +1,30 @@
+body, html{
+  height: 100%;
+  width: 100%;
+}
+.headerContainer{
+  background-color: #1f2025;
+  line-height: 50px;
+  color: #fff;
+  margin-left: 120px;
+  text-indent: 10px;
+}
+
+.menuContainer{
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHcAAAAFCAIAAADwseQXAAAAGXRFW…DwRDkHNyfEwQeqBgudKOe/ufo4/OkfkxtmTPIvIc/iW4ABANf0s7oru8kKAAAAAElFTkSuQmCC);
+  width: 120px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: -2px;
+  -webkit-box-shadow: 4px -1px 4px #000;
+  box-shadow: 4px -1px 4px #000;
+  list-style: none;
+  text-align: center;
+  z-index: 2;
+}
+.menuContainer .logo{
+  background-color: #fe4e3f;
+  line-height: 50px;
+  color: #fff;
+}
