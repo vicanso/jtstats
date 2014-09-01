@@ -4,6 +4,25 @@ db = require './db'
 stats = require './stats'
 _ = require 'underscore'
 
+
+
+doLag = ->
+  lagTotal = 0
+  lagCount = 0
+  toobusy = require 'toobusy'
+  lagLog = ->
+    lagTotal += toobusy.lag()
+    lagCount++
+    if lagCount == 10
+      lag = Math.ceil lagTotal / lagCount
+      lagCount = 0
+      lagTotal = 0
+      stats.add "jtstats|lag|average|#{lag}|#{Date.now()}"
+    setTimeout lagLog, 1000
+  lagLog()
+
+
+
 module.exports.start = (options = {}) ->
   server.on 'listening', ->
     address = server.address()
@@ -22,3 +41,8 @@ module.exports.start = (options = {}) ->
   stats.setInterval options.interval if options.interval
 
   server.bind options.port || 9300, options.host || '127.0.0.1'
+
+  doLag()
+
+
+    

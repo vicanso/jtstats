@@ -1,5 +1,5 @@
 (function() {
-  var db, dgram, server, stats, _;
+  var db, dgram, doLag, server, stats, _;
 
   dgram = require('dgram');
 
@@ -10,6 +10,26 @@
   stats = require('./stats');
 
   _ = require('underscore');
+
+  doLag = function() {
+    var lagCount, lagLog, lagTotal, toobusy;
+    lagTotal = 0;
+    lagCount = 0;
+    toobusy = require('toobusy');
+    lagLog = function() {
+      var lag;
+      lagTotal += toobusy.lag();
+      lagCount++;
+      if (lagCount === 10) {
+        lag = Math.ceil(lagTotal / lagCount);
+        lagCount = 0;
+        lagTotal = 0;
+        stats.add("jtstats|lag|average|" + lag + "|" + (Date.now()));
+      }
+      return setTimeout(lagLog, 1000);
+    };
+    return lagLog();
+  };
 
   module.exports.start = function(options) {
     if (options == null) {
@@ -37,7 +57,8 @@
     if (options.interval) {
       stats.setInterval(options.interval);
     }
-    return server.bind(options.port || 9300, options.host || '127.0.0.1');
+    server.bind(options.port || 9300, options.host || '127.0.0.1');
+    return doLag();
   };
 
 }).call(this);

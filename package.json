@@ -1,11 +1,12 @@
 {
   "name": "jtstats",
   "description": "stats server",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "main": "dest/index",
   "dependencies": {
     "commander": "^2.2.0",
     "mongoose": "~3.8.8",
+    "toobusy": "^0.2.4",
     "underscore": "~1.6.0"
   },
   "devDependencies": {
