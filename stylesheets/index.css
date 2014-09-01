@@ -1,6 +1,10 @@
 body, html{
   height: 100%;
   width: 100%;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
 }
 .headerContainer{
   background-color: #1f2025;
@@ -11,7 +15,7 @@ body, html{
 }
 
 .menuContainer{
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHcAAAAFCAIAAADwseQXAAAAGXRFW…DwRDkHNyfEwQeqBgudKOe/ufo4/OkfkxtmTPIvIc/iW4ABANf0s7oru8kKAAAAAElFTkSuQmCC);
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHcAAAAFCAIAAADwseQXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA19pVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0iQkNDM0I5MzAyQTJDMzk5OERDOTQxMzYyMjhCRjdFMTUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RTFDMUU3NzQwN0Q0MTFFNEJDQzE4Qzc3QUIwQzg3MTUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RTFDMUU3NzMwN0Q0MTFFNEJDQzE4Qzc3QUIwQzg3MTUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RUNDQ0VFOEJDQzYxMTFFMzlDODFBNUFFNEZDRTJDRjEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RUNDQ0VFOENDQzYxMTFFMzlDODFBNUFFNEZDRTJDRjEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz5wgGiWAAABYklEQVR42oRVS5aEMAgMJKfp92Y397/YmKQxaFkN2sNCkfBLpYjy+vktu4w551KKiJRL1F9ziS/50/1NRyDHLuMgiyKco0J46IFD2IdXQ57PBkooB3utdYyhunfVe7dP7NGXVtSEv2pjBKCYpywxi2dzHXYv2spX4f6QLgCagcjhqocSgAsQM0bcZZbcBnbIUZyEj8GwtXfvf7rL/uk+tTaUNqNjZ5Bxn6FD4O4SWPI/ystp3hZ4wjc7s52fHn6y5v4McsLQfV7KeigaMDpJoNu2tdachk5ny+Ed2mrvA3xnAvFwZ3qhRDurih98AOfpTuA5XbzAHFXag/OiYILCVYAJzVfBItcxhp/oy+2Wxthot0e/66VUYgRGcz8nshWD7w2I2Oc1i2jGdwSdouIRXihnjsDvy83AM5IpkyfoiYDwRDkHNyfEwQeqBgudKOe/ufo4/OkfkxtmTPIvIc/iW4ABANf0s7oru8kKAAAAAElFTkSuQmCC);
   width: 120px;
   position: fixed;
   top: 0;
@@ -27,4 +31,39 @@ body, html{
   background-color: #fe4e3f;
   line-height: 50px;
   color: #fff;
+}
+.menuContainer .functions{
+  margin: 0;
+  padding: 0;
+}
+.menuContainer .functions li{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+}
+.menuContainer .functions li a{
+  margin: 0 10px;
+  padding: 30px 0;
+  display: block;
+  color: #6a6b70;
+  text-decoration: none;
+  border-bottom: 1px solid #32353c;
+}
+.menuContainer .functions li a.active, .menuContainer .functions li a:hover{
+  color: #fff;
+}
+.menuContainer .functions li a.active:after{
+  content: ' ';
+  position: absolute;
+  left: 0;
+  top: 25px;
+  bottom: 25px;
+  width: 2px;
+  background-color: #fe4f3e;
+}
+.menuContainer .functions li a i{
+  font-size: 24px;
+  display: block;
+  margin: 10px;
 }
