@@ -29,10 +29,9 @@ module.exports.start = (options = {}) ->
     console.log "jtstats, UDP server listening on #{address.address}:#{address.port}"
   server.on 'message', (msg) ->
 
-    arr = msg.toString().split '||'
-    console.log arr.join '\n' if options.enableLog
-    _.each arr, (msg) ->
-      stats.add msg
+    msg = msg.toString()
+    console.log msg if options.enableLog
+    stats.add msg
 
   if !options.uri
     throw new Error 'the mongodb uri is undefined'

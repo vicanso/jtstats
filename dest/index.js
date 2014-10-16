@@ -41,14 +41,11 @@
       return console.log("jtstats, UDP server listening on " + address.address + ":" + address.port);
     });
     server.on('message', function(msg) {
-      var arr;
-      arr = msg.toString().split('||');
+      msg = msg.toString();
       if (options.enableLog) {
-        console.log(arr.join('\n'));
+        console.log(msg);
       }
-      return _.each(arr, function(msg) {
-        return stats.add(msg);
-      });
+      return stats.add(msg);
     });
     if (!options.uri) {
       throw new Error('the mongodb uri is undefined');
