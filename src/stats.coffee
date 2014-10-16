@@ -2,6 +2,7 @@ _ = require 'underscore'
 db = require './db'
 saveInterval = 10 * 1000
 LOG_DATA_DICT = {}
+async = require 'async'
 
 ###*
  * [add 添加统计]
@@ -63,12 +64,24 @@ saveData = (key) ->
     value = sum _.pluck list, 'value'
   pushValue = {}
   t = Math.floor (createdAt - date.getTime()) / 1000
+  return if _.isNaN value
+
   pushValue[t] = value
-  db.findOneAndUpdate collection, query, {
-    '$push' : 
-      'values' : pushValue
+  updateQueue.push {
+    collection : collection
+    query : query
+    update : 
+      '$push' :
+        'values' : pushValue 
   } if !~collection.indexOf 'stats_'
   return
+
+
+updateQueue = async.queue (task, cbf) ->
+  db.findOneAndUpdate task.collection, task.query, task.update, cbf
+, 10
+
+
 
 
 formatDate = (date) ->

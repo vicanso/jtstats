@@ -1,1 +1,1 @@
-node-dev src/app.coffee --uri mongodb://localhost:10020/stats
+node-dev src/app.coffee --host 0.0.0.0 --uri mongodb://localhost:10020/stats

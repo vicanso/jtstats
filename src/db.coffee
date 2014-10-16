@@ -31,13 +31,13 @@ module.exports.initDb = (uri) ->
  * @param  {Object} update
  * @return {[type]}
 ###
-module.exports.findOneAndUpdate = (collection, query, update) ->
+module.exports.findOneAndUpdate = (collection, query, update, cbf = noop) ->
   Model = modelDict[collection]
   Model = getModel collection if !Model
   options =
     upsert : true
     multi : false
-  Model.update query, update, options, noop
+  Model.update query, update, options, cbf
 
 ###*
  * [getModel 获取model]
