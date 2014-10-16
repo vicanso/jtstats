@@ -46,8 +46,11 @@
    * @return {[type]}
    */
 
-  module.exports.findOneAndUpdate = function(collection, query, update) {
+  module.exports.findOneAndUpdate = function(collection, query, update, cbf) {
     var Model, options;
+    if (cbf == null) {
+      cbf = noop;
+    }
     Model = modelDict[collection];
     if (!Model) {
       Model = getModel(collection);
@@ -56,7 +59,7 @@
       upsert: true,
       multi: false
     };
-    return Model.update(query, update, options, noop);
+    return Model.update(query, update, options, cbf);
   };
 
 

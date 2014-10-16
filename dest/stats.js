@@ -1,5 +1,5 @@
 (function() {
-  var LOG_DATA_DICT, average, db, formatDate, saveData, saveInterval, sum, _;
+  var LOG_DATA_DICT, async, average, db, formatDate, saveData, saveInterval, sum, updateQueue, _;
 
   _ = require('underscore');
 
@@ -8,6 +8,8 @@
   saveInterval = 10 * 1000;
 
   LOG_DATA_DICT = {};
+
+  async = require('async');
 
 
   /**
@@ -83,15 +85,26 @@
     }
     pushValue = {};
     t = Math.floor((createdAt - date.getTime()) / 1000);
+    if (_.isNaN(value)) {
+      return;
+    }
     pushValue[t] = value;
     if (!~collection.indexOf('stats_')) {
-      db.findOneAndUpdate(collection, query, {
-        '$push': {
-          'values': pushValue
+      updateQueue.push({
+        collection: collection,
+        query: query,
+        update: {
+          '$push': {
+            'values': pushValue
+          }
         }
       });
     }
   };
+
+  updateQueue = async.queue(function(task, cbf) {
+    return db.findOneAndUpdate(task.collection, task.query, task.update, cbf);
+  }, 10);
 
   formatDate = function(date) {
     var day, month, str;
