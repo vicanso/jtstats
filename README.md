@@ -6,7 +6,7 @@
 ### 启动命令
 
 
-node dest/app -p 6000 --host 0.0.0.0 --uri mongodb://user:pwd@host:port/stats
+node app -p 6000 --host 0.0.0.0 --uri mongodb://user:pwd@host:port/stats
 
 
 
@@ -17,7 +17,7 @@ node dest/app -p 6000 --host 0.0.0.0 --uri mongodb://user:pwd@host:port/stats
 
 ### 统计数据显示
 
-[JTStats_monitor](https://github.com/vicanso/jtstats_monitor)
+[JTDashboard](https://github.com/vicanso/jtdashboard)
 
 
 ### demo

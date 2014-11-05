@@ -1,18 +1,17 @@
 {
   "name": "jtstats",
   "description": "stats server",
-  "version": "0.1.0",
-  "main": "dest/index",
+  "version": "0.1.1",
+  "main": "app",
   "dependencies": {
     "async": "^0.9.0",
-    "commander": "^2.2.0",
-    "mongoose": "~3.8.8",
+    "commander": "^2.5.0",
+    "mongoose": "~3.9.4",
     "toobusy": "^0.2.4",
-    "underscore": "~1.6.0"
+    "underscore": "~1.7.0"
   },
   "devDependencies": {
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-coffee": "~0.10.1",
-    "grunt-contrib-jshint": "~0.9.2"
+    "gulp": "^3.8.10",
+    "gulp-jshint": "^1.9.0"
   }
 }
