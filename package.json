@@ -6,7 +6,8 @@
   "dependencies": {
     "async": "^0.9.0",
     "commander": "^2.5.0",
-    "mongoose": "~3.9.4",
+    "mongoose": "~3.8.18",
+    "node-schedule": "^0.1.13",
     "toobusy": "^0.2.4",
     "underscore": "~1.7.0"
   },
