@@ -1,7 +1,7 @@
 {
   "name": "jtstats",
   "description": "stats server",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "app",
   "dependencies": {
     "async": "^0.9.0",
