@@ -1,11 +1,11 @@
 {
   "name": "jtstats",
   "description": "stats server",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "main": "app",
   "dependencies": {
     "async": "^0.9.0",
-    "jtlogger": "0.0.6",
+    "jtlogger": "0.0.7",
     "lodash": "^2.4.1",
     "mongoose": "~3.8.18",
     "node-schedule": "^0.1.13",

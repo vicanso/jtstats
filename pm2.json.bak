@@ -4,9 +4,9 @@
   "merge_logs" : true,
   "max-memory-restart" : "100M",
   "script" : "app.js",
-  "log_file" : "/vicanso/log/jtstats.log",
-  "error_file" : "/vicanso/log/jtstats-error.log",
-  "out_file" : "/vicanso/log/jtstats-out.log",
+  "log_file" : "/vicanso/pm2/log/jtstats.log",
+  "error_file" : "/vicanso/pm2/log/jtstats-error.log",
+  "out_file" : "/vicanso/pm2/log/jtstats-out.log",
   "env" : {
     "NODE_ENV" : "production",
     "MONGODB_URI" : "mongodb://vicanso:MY_MONGODB_PWD@mongodb:5000/stats"
