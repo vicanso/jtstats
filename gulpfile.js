@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 
 gulp.task('jshint', function() {
-  return gulp.src('./lib/*.js')
+  return gulp.src(['./lib/*.js', './app.js', './config.js'])
     .pipe(jshint({
       predef : ['require', 'module'],
       node : true
