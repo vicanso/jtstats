@@ -15,7 +15,7 @@ async.waterfall([
     if(mongodbAuth){
       mongodbUri = mongodbAuth + '@' + mongodbUri;
     }
-    mongodbUri = 'mongodb://' + mongodbUri;
+    mongodbUri = 'mongodb://' + mongodbUri + '/stats';
     statsServer.start(serverList.stats, mongodbUri);
   }
 ]);
