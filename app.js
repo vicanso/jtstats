@@ -22,6 +22,32 @@ async.waterfall([
 
 
 function getServers(cbf){
+  if(config.env === 'development'){
+    cbf(null, {
+      "log" : {
+        "host" : "127.0.0.1",
+        "port" : 7000
+      },
+      "zmq" : {
+        "host" : "127.0.0.1",
+        "port" : 7010
+      },
+      "stats" : {
+        "host" : "127.0.0.1",
+        "port" : 6000
+      },
+      "mongodb" : {
+        "host" : "127.0.0.1",
+        "port" : 5000
+      },
+      "redis" : {
+        "host" : "127.0.0.1",
+        "port" : 4000
+      }
+    });
+    return;
+  }
+
   var serverUrl = 'http://jt-service.oss-cn-shenzhen.aliyuncs.com/server.json';
   request.get(serverUrl, function(err, res, data){
     if(err){
